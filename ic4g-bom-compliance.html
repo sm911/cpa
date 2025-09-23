@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IC4G BOM - Compliant Capability Overview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 25px;
+            padding: 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #10b981 0%, #34d399 50%, #6ee7b7 100%);
+        }
+
+        h1 {
+            color: #1a365d;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #4a5568;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+
+        /* Navigation Back Button */
+        .nav-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: white;
+            color: #3a7bd5;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Compliance Table Section */
+        .compliance-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: #1a365d;
+            font-size: 2em;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: "📋";
+            font-size: 1.2em;
+        }
+
+        /* Compliance Table */
+        .compliance-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .compliance-table thead {
+            background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);
+            color: white;
+        }
+
+        .compliance-table th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .compliance-table tbody tr {
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .compliance-table tbody tr:hover {
+            background: #f8f9fa;
+            transform: scale(1.01);
+        }
+
+        .compliance-table td {
+            padding: 20px;
+            vertical-align: top;
+        }
+
+        .requirement-cell {
+            font-weight: 600;
+            color: #2d3748;
+            width: 30%;
+        }
+
+        .delivery-cell {
+            color: #4a5568;
+            width: 50%;
+            line-height: 1.7;
+        }
+
+        .status-cell {
+            width: 20%;
+            text-align: center;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95em;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Terms Section */
+        .terms-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .terms-grid {
+            display: grid;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .term-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid #3b82f6;
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .term-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        }
+
+        .term-name {
+            color: #1e40af;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .term-definition {
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        /* Software Section */
+        .software-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .software-intro {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .software-intro-text {
+            color: #78350f;
+            font-size: 1.05em;
+            line-height: 1.7;
+        }
+
+        .software-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .software-card {
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .software-card.recommended {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .software-card.alternative {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .software-card.value {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+        }
+
+        .software-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .software-label {
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .software-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .recommended-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: #fbbf24;
+            color: #78350f;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        /* Usage Box */
+        .usage-box {
+            background: #f0fdf4;
+            border: 2px solid #86efac;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .usage-title {
+            color: #14532d;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .usage-text {
+            color: #166534;
+            line-height: 1.7;
+        }
+
+        /* Configuration Steps */
+        .config-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .config-steps {
+            counter-reset: step-counter;
+            margin-top: 30px;
+        }
+
+        .config-step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 25px;
+            counter-increment: step-counter;
+        }
+
+        .config-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .config-step-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            color: #475569;
+            line-height: 1.7;
+            border-left: 3px solid #10b981;
+        }
+
+        /* Highlights */
+        .highlight-blue {
+            background: #dbeafe;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .highlight-green {
+            background: #d1fae5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #064e3b;
+        }
+
+        .highlight-purple {
+            background: #ede9fe;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #4c1d95;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .compliance-table {
+                font-size: 0.9em;
+            }
+
+            .compliance-table th,
+            .compliance-table td {
+                padding: 15px 10px;
+            }
+
+            .software-options {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        /* Strong emphasis */
+        strong {
+            font-weight: 700;
+            color: #1a365d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>IC4G BOM — Compliant Capability</h1>
+            <div class="subtitle"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-section">
+            <a href="cloud-backup-dedup-guide.html" class="back-button">
+                ← Back to Technical Implementation Guide
+            </a>
+        </div>
+
+        <!-- Compliance Requirements Table -->
+        <div class="compliance-section">
+            <h2 class="section-title">CPA Requirements & Delivery Status</h2>
+            <table class="compliance-table">
+                <thead>
+                    <tr>
+                        <th>CPA Ask (Cloud Scope)</th>
+                        <th>What We Deliver</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="requirement-cell">IC4G on VMware (vSphere 7.0 U3i)</td>
+                        <td class="delivery-cell">8 servers with Dual Intel Xeon 6248 CPUs and the VMware Cloud Foundation licenses.</td>
+                        <td class="status-cell"><span class="status-badge">✓ Meets</span></td>
+                    </tr>
+                    <tr>
+                        <td class="requirement-cell">No increase to physical quantities</td>
+                        <td class="delivery-cell">Everything added is <span class="highlight-green">software</span> running on the <span class="highlight-green">existing 8 servers</span>. No new hardware is required.</td>
+                        <td class="status-cell"><span class="status-badge">✓ Meets</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 20px; padding: 15px; background: #fef3c7; border-radius: 8px; color: #78350f;">
+                * When deduplication software is included (typical total reduction ~8–12:1; target ≥10:1)
+            </p>
+        </div>
+
+        <!-- Terms Explained Section -->
+        <div class="terms-section">
+            <h2 class="section-title">📚 Terms Explained in Plain English</h2>
+            <div class="terms-grid">
+                <div class="term-card">
+                    <div class="term-name">Forever-Forward Incremental (FFI)</div>
+                    <div class="term-definition">
+                        Take <strong>one full backup</strong> at the start. After that, take <strong>incremental backups</strong> every day (only the changes). The chain is maintained so the newest point is always usable without doing fresh fulls each week.
+                    </div>
+                </div>
+                <div class="term-card">
+                    <div class="term-name">Synthetic Full</div>
+                    <div class="term-definition">
+                        A <strong>new full backup</strong> built <strong>from the backups we already have</strong> (on the repository). It avoids re-reading all production data and keeps storage use efficient.
+                    </div>
+                </div>
+                <div class="term-card">
+                    <div class="term-name">Virtual Deduplication Repository</div>
+                    <div class="term-definition">
+                        Backup software that finds and removes <strong>duplicate blocks</strong> across many servers and many days, so we store much less data. It runs as a <strong>VM</strong> on the IC4G cluster.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Software Requirements Section -->
+        <div class="software-section">
+            <h2 class="section-title">💿 Required Software for Data Reduction</h2>
+            
+            <div class="software-intro">
+                <p class="software-intro-text">
+                    <strong>Important:</strong> To reliably keep COS at or below <strong>300 TB</strong> with 36-day daily backups, 
+                    a <strong>virtual deduplication software package</strong> must be added (licensed separately, not part of IC4G pricing).
+                </p>
+            </div>
+
+            <div class="software-options">
+                <div class="software-card recommended">
+                    <span class="recommended-badge">Recommended</span>
+                    <div class="software-label">Primary Choice</div>
+                    <div class="software-name">Dell PowerProtect DD Virtual Edition (DDVE)</div>
+                </div>
+                <div class="software-card alternative">
+                    <div class="software-label">Alternative</div>
+                    <div class="software-name">HPE StoreOnce VSA</div>
+                </div>
+                <div class="software-card value">
+                    <div class="software-label">Value Option</div>
+                    <div class="software-name">Quantum DXi V-Series</div>
+                </div>
+            </div>
+
+            <div class="usage-box">
+                <div class="usage-title">How It's Used:</div>
+                <div class="usage-text">
+                    Veeam writes backups to this dedup repository first (global block-level deduplication). 
+                    Older restore points are then <strong>moved</strong> to IBM COS (with Object Lock) via SOBR. 
+                    In practice this provides <strong>~8–12:1</strong> total reduction on mixed VM workloads, 
+                    which keeps COS <strong>≤ 300 TB</strong> while maintaining the <strong>36-day daily</strong> schedule.
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Steps -->
+        <div class="config-section">
+            <h2 class="section-title">🛠️ What IBM Consulting Will Configure</h2>
+            
+            <div class="config-steps">
+                <div class="config-step">
+                    <div class="config-step-text">
+                        Deploy <strong>one</strong> virtual deduplication repository VM on the existing IC4G hosts.
+                    </div>
+                </div>
+                <div class="config-step">
+                    <div class="config-step-text">
+                        Deploy <strong>one</strong> Linux <strong>XFS</strong> repository VM (fast-clone enabled).
+                    </div>
+                </div>
+                <div class="config-step">
+                    <div class="config-step-text">
+                        Build <strong>SOBR</strong>: Performance Tier = {Dedup repo + XFS}; 
+                        Capacity Tier = <strong>COS</strong> with <strong>Object Lock</strong>; 
+                        policy = <strong>Move</strong> after <em>N</em> days.
+                    </div>
+                </div>
+                <div class="config-step">
+                    <div class="config-step-text">
+                        Set Veeam jobs to <strong>FFI</strong>, <strong>compression on</strong>, 
+                        <strong>inline dedup on</strong>, <strong>CBT on</strong>, with common exclusions 
+                        (pagefile/swap/temp/cache) and grouping of similar VMs.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding: 40px 20px; color: white;">
+            <p style="opacity: 0.9;">IC4G/VCF Infrastructure Optimization</p>
+            <p style="margin-top: 10px; opacity: 0.8;">
+                For technical implementation details, refer to the 
+                <a href="cloud-backup-dedup-guide.html" style="color: #93c5fd; text-decoration: none; font-weight: 600;">
+                    Cloud Backup Data-Reduction Pattern Guide
+                </a>
+            </p>
+        </div>
+    </div>
+</body>
+</html> Meets</span></td>
+                    </tr>
+                    <tr>
+                        <td class="requirement-cell">36-day retention with daily backups</td>
+                        <td class="delivery-cell">We keep <span class="highlight-blue">daily backups</span> for <span class="highlight-blue">36 days</span>. Backups use <span class="highlight-green">Forever-Forward Incremental (FFI)</span>: after the first full backup, we only save the daily changes. If a full backup is ever required by policy, we create a <span class="highlight-green">Synthetic Full</span> (built from existing backup data, not by re-reading all production data).</td>
+                        <td class="status-cell"><span class="status-badge">✓ Meets</span></td>
+                    </tr>
+                    <tr>
+                        <td class="requirement-cell">Keep IBM Cloud Object Storage (COS) ≤ 300 TB</td>
+                        <td class="delivery-cell">We send backups to a <span class="highlight-purple">virtual deduplication repository</span> first (software running on the existing IC4G hosts). That system removes duplicate blocks across many backups. We also use a <span class="highlight-purple">Linux XFS repository</span> for fast merges and a <span class="highlight-purple">Scale-Out Backup Repository (SOBR)</span> policy set to <strong>Move</strong> older restore points to COS.</td>
+                        <td class="status-cell"><span class="status-badge">✓ Meets*</span></td>
+                    </tr>
+                    <tr>
+                        <td class="requirement-cell">Immutable backups</td>
+                        <td class="delivery-cell"><span class="highlight-green">IBM COS Object Lock</span> is enabled on the bucket so backups cannot be changed or deleted during the retention period.</td>
+                        <td class="status-cell"><span class="status-badge">✓ Meets</span></td>
+                    </tr>
+                    <tr>
+                        <td class="requirement-cell">Finish backups within the time window</td>
+                        <td class="delivery-cell">We deploy <span class="highlight-blue">Veeam proxy servers</span> (handle backup traffic) and <span class="highlight-blue">object-storage gateways</span> (handle the offload to COS). These are virtual machines on the same 8 hosts.</td>
+                        <td class="status-cell"><span class="status-badge">✓
