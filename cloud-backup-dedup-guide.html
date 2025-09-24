@@ -3,63 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Backup Data-Reduction Pattern</title>
+    <title>IC4G Backup Architecture — Data Flow & 36-Day Lifecycle</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-            min-height: 100vh;
+            margin: 0;
             padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-        }
-
-        /* Header Section */
-        .header {
-            background: rgba(255, 255, 255, 0.98);
+            background: white;
             border-radius: 20px;
             padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
-            color: #1a365d;
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            color: #4a5568;
-            font-size: 1.1em;
+            color: #2d3748;
+            text-align: center;
             margin-bottom: 20px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* Purpose Box */
+        h2 {
+            color: #2d3748;
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h2::before {
+            content: "▶";
+            margin-right: 15px;
+            color: #4facfe;
+            font-size: 0.7em;
+        }
+
+        h3 {
+            color: #4a5568;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        .overview-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .overview-box h2 {
+            color: white;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .overview-box p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        /* Download Link */
+        .download-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .download-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .download-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.5);
+        }
+
+        .download-desc {
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+
+        /* Purpose/Strategic Objective Box */
         .purpose-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -74,6 +122,8 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            color: white;
+            border: none;
         }
 
         .purpose-box .key-points {
@@ -153,6 +203,159 @@
             margin-bottom: 15px;
         }
 
+        .rationale-box {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            overflow-x: auto;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .mermaid {
+            max-width: 100%;
+            height: auto;
+            min-width: 1000px;
+        }
+
+        .sequence-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            overflow-x: auto;
+        }
+
+        .gantt-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            overflow-x: auto;
+        }
+
+        .content-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .quantities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .quantity-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #4facfe;
+        }
+
+        .quantity-card h4 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .quantity-card .number {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .quantity-card p {
+            color: #4a5568;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .component-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .component-card.customer {
+            border-left: 4px solid #4facfe;
+        }
+
+        .component-card.ic4g {
+            border-left: 4px solid #667eea;
+        }
+
+        .component-card.cos {
+            border-left: 4px solid #10b981;
+        }
+
+        .component-card h4 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .component-card ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .component-card li {
+            color: #4a5568;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .process-flow {
+            background: #fff5f5;
+            border: 2px solid #fc8181;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .process-flow h3 {
+            color: #742a2a;
+            margin-bottom: 20px;
+        }
+
+        .process-flow ol {
+            margin: 0;
+            padding-left: 25px;
+        }
+
+        .process-flow li {
+            color: #2d3748;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .process-flow strong {
+            color: #742a2a;
+        }
+
         /* Configuration Section */
         .config-section {
             background: white;
@@ -222,91 +425,6 @@
             font-size: 1.2em;
         }
 
-        /* Flowchart Section */
-        .flowchart-section {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        #diagram {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            overflow-x: auto;
-        }
-
-        /* Acceptance Criteria */
-        .criteria-section {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .criteria-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .criteria-item {
-            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
-            padding: 25px;
-            border-radius: 15px;
-            position: relative;
-            color: #1a365d;
-        }
-
-        .criteria-number {
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: white;
-            color: #4facfe;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Risks Section */
-        .risks-section {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .risk-card {
-            background: #fff5f5;
-            border-left: 4px solid #f56565;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
-
-        .risk-title {
-            color: #c53030;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .risk-mitigation {
-            color: #2d3748;
-            margin-top: 10px;
-            padding-left: 20px;
-        }
-
         /* Outcome Section */
         .outcome-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -341,39 +459,39 @@
             opacity: 0.9;
         }
 
-        /* Section Headers */
-        h2 {
-            color: #1a365d;
-            font-size: 1.8em;
+        .key-benefits {
+            background: #e6fffa;
+            border: 2px solid #38b2ac;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .key-benefits h3 {
+            color: #234e52;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
         }
 
-        h2::before {
-            content: "▶";
-            margin-right: 15px;
-            color: #4facfe;
-            font-size: 0.7em;
+        .key-benefits ul {
+            margin: 0;
+            padding-left: 20px;
         }
 
-        /* Responsive */
+        .key-benefits li {
+            color: #2d3748;
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .config-grid, .settings-grid, .criteria-list {
+            .quantities-grid,
+            .components-grid {
                 grid-template-columns: 1fr;
             }
-
-            .outcome-metrics {
-                flex-direction: column;
-                gap: 20px;
+            
+            .mermaid {
+                min-width: 800px;
             }
         }
 
@@ -394,37 +512,30 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>Cloud Backup Data-Reduction Pattern</h1>
-            <div class="subtitle">IC4G/VCF Infrastructure Optimization</div>
+        <h1>IC4G Backup Architecture</h1>
+        
+        <div class="overview-box">
+            <h2>Data Flow & 36-Day Lifecycle</h2>
+            <p>
+                A comprehensive implementation guide for achieving 36-day daily incremental backups while maintaining 
+                storage consumption ≤300 TB in IBM Cloud Object Storage. This system leverages deduplication, 
+                automated tiering, and immutable storage to deliver enterprise-grade backup protection.
+            </p>
         </div>
 
         <!-- Download Link Section -->
-        <div style="text-align: center; margin-bottom: 30px;">
-            <a href="Cloud Backup Storage Dedup Challenge.pptx" 
-               style="display: inline-block; 
-                      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
-                      color: white; 
-                      padding: 15px 35px; 
-                      border-radius: 30px; 
-                      text-decoration: none; 
-                      font-weight: 600; 
-                      font-size: 1.1em;
-                      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
-                      transition: all 0.3s ease;"
-               onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(79, 172, 254, 0.5)'"
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(79, 172, 254, 0.4)'">
+        <div class="download-section">
+            <a href="Cloud Backup Storage Dedup Challenge.pptx" class="download-link">
                 📊 View Detailed PowerPoint Presentation
             </a>
-            <p style="color: rgba(255, 255, 255, 0.9); margin-top: 10px; font-size: 0.95em;">
+            <p class="download-desc">
                 Download comprehensive technical deep-dive with implementation details
             </p>
         </div>
 
-        <!-- Purpose -->
+        <!-- Strategic Objective -->
         <div class="purpose-box">
-            <h2>📎 Strategic Objective</h2>
+            <h2>🔍 Strategic Objective</h2>
             <p>Enable 36-day <strong style="color: white;">daily incrementals</strong> to remain <strong style="color: white;">≤ 300 TB</strong> in IBM Cloud Object Storage (COS) on IC4G/VCF, preserving schedules and RTOs.</p>
             <div class="key-points">
                 <span class="key-point">📅 36-Day Retention</span>
@@ -454,8 +565,186 @@
                     <div>Cost-effective with Veeam Data Mover support</div>
                 </div>
             </div>
-            <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; margin-top: 20px; border-left: 4px solid #0ea5e9;">
+            <div class="rationale-box">
                 <strong>Rationale:</strong> All three provide global, variable-length deduplication with native Veeam integrations (DD Boost / Catalyst / Veeam Data Mover) to deliver <strong>~8–12:1</strong> effective reduction on mixed VM workloads.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>What the System Does</h3>
+            <div class="process-flow">
+                <ol>
+                    <li><strong>Day 1:</strong> Take a full backup from the production systems and land it on the virtual dedupe repository running in IC4G (not on-prem).</li>
+                    <li><strong>Days 2–36:</strong> Take daily changes only and write them to the same dedupe repository; XFS is used as a space-saving work area to build "full" points without copying all data.</li>
+                    <li><strong>After N days (e.g., 7):</strong> Automatically move older restore points to IBM Cloud Object Storage (COS) where they are write-protected (Object Lock).</li>
+                    <li><strong>At Day 36:</strong> Anything older than 36 days expires per policy.</li>
+                </ol>
+            </div>
+        </div>
+
+        <h2>Rule-of-Thumb Quantities</h2>
+        <div class="quantities-grid">
+            <div class="quantity-card">
+                <h4>Logical Data in Scope</h4>
+                <div class="number">≈ 3,000 TB</div>
+                <p>Total data volume over 36 days</p>
+            </div>
+            <div class="quantity-card">
+                <h4>Daily Change Example</h4>
+                <div class="number">≈ 2% = 60 TB/day</div>
+                <p>Typical daily change rate (logical)</p>
+            </div>
+            <div class="quantity-card">
+                <h4>Effective Reduction</h4>
+                <div class="number">≈ 10:1</div>
+                <p>Dedupe repo target range 8–12:1</p>
+            </div>
+            <div class="quantity-card">
+                <h4>Amount Moved to COS</h4>
+                <div class="number">60 ÷ 10 ≈ 6 TB</div>
+                <p>Per day (already deduped)</p>
+            </div>
+            <div class="quantity-card">
+                <h4>COS Steady-State Target</h4>
+                <div class="number">≤ 300 TB</div>
+                <p>At Day 36</p>
+            </div>
+        </div>
+
+        <h2>Component-Labeled Data Flow</h2>
+        <div class="mermaid-container">
+            <div class="mermaid" id="architecture-flow">
+flowchart LR
+    %% Style
+    classDef lane fill:#f6f9ff,stroke:#4C6EF5,rx:12,ry:12
+    classDef comp fill:#ffffff,stroke:#4C6EF5,rx:8,ry:8
+    classDef cloud fill:#eefcf5,stroke:#2f9e44,rx:8,ry:8
+    classDef policy fill:#fff4e6,stroke:#f08c00,rx:8,ry:8
+
+    %% Source
+    subgraph SRC["Customer Site — Production Systems"]
+        VM[Protected VMs / Apps]:::comp
+    end
+
+    %% IC4G compute & repos
+    subgraph IC4G["IBM Cloud for Government — VCF Tenant (Backup Stack)"]
+        VBR[Veeam Server<br/>jobs & retention rules]:::comp
+        PRX[Veeam Proxies<br/>read changes]:::comp
+        subgraph REPO["Primary Landing (Performance Tier)"]
+            DEDUPE[Virtual Dedupe Repository<br/>DDVE / StoreOnce VSA / DXi]:::comp
+            XFS[XFS Repository<br/>fast-clone workspace]:::comp
+        end
+        SOBR[SOBR Policy<br/>Perf = Dedupe + XFS<br/>Cap = COS • Action = Move after N days]:::policy
+        GW[Object-Storage Gateways]:::comp
+    end
+
+    %% Capacity tier
+    subgraph COSLANE["IBM Cloud Object Storage — Capacity Tier"]
+        COS[Bucket with Object Lock immutable]:::cloud
+    end
+
+    %% Flow
+    VM -->|Day-1 FULL, then daily changes only| PRX
+    PRX -->|write backups| DEDUPE
+    PRX -.->|build space-saving fulls| XFS
+    VBR --> SOBR
+    DEDUPE -->|restore points older than N days| SOBR
+    SOBR -->|Move| GW
+    GW -->|S3| COS
+    XFS -->|metadata/points as needed| SOBR
+            </div>
+        </div>
+
+        <h2>Daily Operation with Amounts</h2>
+        <div class="sequence-container">
+            <div class="mermaid" id="daily-sequence">
+sequenceDiagram
+    autonumber
+    title Daily Backup, Dedupe & Offload (with example amounts)
+
+    participant VM as Production System
+    participant PRX as Veeam Proxy
+    participant DEDUPE as Virtual Dedupe Repo
+    participant XFS as XFS Workspace
+    participant SOBR as Policy (Move after N days)
+    participant GW as Object-Storage Gateway
+    participant COS as IBM COS (immutable)
+
+    Note over VM: Day 1 — take FIRST FULL
+    VM->>PRX: Full dataset
+    PRX->>DEDUPE: ~3,000 TB logical (baseline) → stored as unique chunks
+
+    Note over VM: Day 2..36 — daily changes only
+    VM->>PRX: ≈60 TB logical changes (example)
+    PRX->>DEDUPE: Write changes → effective ≈6 TB after ~10:1 reduction
+    PRX->>XFS: Build "full" point via fast-clone (pointers, not copies)
+
+    Note over SOBR: When a restore point ages > N days (e.g., 7)
+    DEDUPE->>SOBR: Mark eligible points
+    SOBR->>GW: Hand off deduped objects
+    GW->>COS: Store ≈6 TB for that day (immutable)
+            </div>
+        </div>
+
+        <h2>36-Day Lifecycle Timeline</h2>
+        <div class="gantt-container">
+            <div class="mermaid" id="lifecycle-gantt">
+gantt
+    title 36-Day Lifecycle — Local First, Then Move to COS
+    dateFormat  YYYY-MM-DD
+    axisFormat  %d
+
+    section Primary Landing<br/>(VCF Repos)
+    Day-1 FULL kept local (fast restore)          :active, 2025-01-01, 7d
+    Daily changes kept local (rolling N days)     :active, 2025-01-02, 6d
+    Recent window kept local (always N most-recent days):crit, 2025-01-08, 29d
+
+    section Capacity Tier<br/>(IBM COS)
+    Day-1 FULL moved to COS (immutable)           :milestone, 2025-01-08, 0d
+    Day-1 FULL retained in COS until Day 36       :done, 2025-01-08, 29d
+    Each day's aged point moved (~6 TB example)   : 2025-01-09, 28d
+    Retention cleanup at Day 36                   :milestone, 2025-02-05, 0d
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>How to Read the Lifecycle</h3>
+            <ul>
+                <li><strong>Most recent N days</strong> stay "warm" on the IC4G performance tier for quick restores.</li>
+                <li><strong>As each day ages past N,</strong> that day's restore point is moved to COS and made immutable.</li>
+                <li><strong>At Day 36,</strong> anything older than 36 days expires per the rule.</li>
+            </ul>
+        </div>
+
+        <h2>Component Descriptions</h2>
+        <div class="components-grid">
+            <div class="component-card customer">
+                <h4>Customer Site — Production Systems</h4>
+                <ul>
+                    <li>Generates the data to protect</li>
+                    <li>Day 1 captures a full backup</li>
+                    <li>Every day after captures only what changed since yesterday</li>
+                </ul>
+            </div>
+
+            <div class="component-card ic4g">
+                <h4>IC4G — VCF Tenant (Backup Stack)</h4>
+                <ul>
+                    <li><strong>Veeam Server</strong> holds rules for how long to keep and when to move old backups</li>
+                    <li><strong>Veeam Proxies</strong> pull the data (full on Day 1; daily changes after)</li>
+                    <li><strong>Virtual Dedupe Repository</strong> stores only unique pieces of data, so repeated data doesn't take extra space</li>
+                    <li><strong>XFS Repository</strong> is a workspace that can build a "new full" using pointers instead of recopying data</li>
+                    <li><strong>SOBR Policy</strong> automatically moves older backups to the cloud after N days</li>
+                </ul>
+            </div>
+
+            <div class="component-card cos">
+                <h4>IBM Cloud Object Storage — Capacity Tier</h4>
+                <ul>
+                    <li>Receives already-reduced backups from IC4G</li>
+                    <li>Object Lock makes backups write-protected until their time is up</li>
+                    <li>Goal is ≤ 300 TB stored after 36 days; this is achieved by deduplicating before sending data to COS</li>
+                </ul>
             </div>
         </div>
 
@@ -570,76 +859,6 @@
             </div>
         </div>
 
-        <!-- Data Flow Diagram -->
-        <div class="flowchart-section">
-            <h2>Data Flow Architecture</h2>
-            <div id="diagram">
-                <pre class="mermaid">
-flowchart LR
-  subgraph VCF["IC4G / VCF (existing hosts)"]
-    VMs[Protected VMs<br/>CBT] --> PROX[Veeam Proxies]
-    PROX --> DEDUPE[Virtual Dedup Repo<br/>DDVE / StoreOnce VSA / DXi]
-    PROX -.-> XFS[XFS Repo - reflink<br/>Fast-clone synthetics]
-    VBR[Veeam Server / SOBR] -->|Policy: Move| GW[Object-Storage Gateways]
-  end
-  GW -->|S3 API over Direct Link| COS[IBM Cloud Object Storage<br/>Object Lock ON, 300 TB]
-                </pre>
-            </div>
-        </div>
-
-        <!-- Acceptance Criteria -->
-        <div class="criteria-section">
-            <h2>Acceptance Criteria (36-day sign-off)</h2>
-            <div class="criteria-list">
-                <div class="criteria-item">
-                    <span class="criteria-number">1</span>
-                    <h3 style="margin-top: 15px; margin-bottom: 10px;">Capacity</h3>
-                    <p>COS usage <strong>≤ 300 TB</strong> at Day 36 (steady state)</p>
-                </div>
-                <div class="criteria-item">
-                    <span class="criteria-number">2</span>
-                    <h3 style="margin-top: 15px; margin-bottom: 10px;">Schedule</h3>
-                    <p>Daily incrementals preserved; backup window met</p>
-                </div>
-                <div class="criteria-item">
-                    <span class="criteria-number">3</span>
-                    <h3 style="margin-top: 15px; margin-bottom: 10px;">Restore</h3>
-                    <p>Instant VM Recovery (recent) and file-level (older) within agreed RTOs</p>
-                </div>
-                <div class="criteria-item">
-                    <span class="criteria-number">4</span>
-                    <h3 style="margin-top: 15px; margin-bottom: 10px;">Controls</h3>
-                    <p>COS Object Lock enforced; access scoped to capacity-tier gateways; logging reviewed</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Risks & Mitigations -->
-        <div class="risks-section">
-            <h2>Risk Management</h2>
-            <div class="risk-card">
-                <div class="risk-title">⚠️ Low Dedupe Yield Datasets</div>
-                <div>Already-compressed/encrypted media</div>
-                <div class="risk-mitigation">
-                    <strong>Mitigation:</strong> Isolate in separate jobs; enforce exclusions; confirm appliance sizing; tune block size by cohort
-                </div>
-            </div>
-            <div class="risk-card">
-                <div class="risk-title">⚠️ Restore Rehydration Latency</div>
-                <div>Older-point restores on inline-dedup repos</div>
-                <div class="risk-mitigation">
-                    <strong>Mitigation:</strong> Retain recent points longer on XFS; pre-stage Instant Recovery for critical VMs
-                </div>
-            </div>
-            <div class="risk-card">
-                <div class="risk-title">⚠️ Policy Drift</div>
-                <div>Risk of Copy to COS or weekly active fulls being enabled</div>
-                <div class="risk-mitigation">
-                    <strong>Mitigation:</strong> Lock SOBR/job templates; apply change control procedures
-                </div>
-            </div>
-        </div>
-
         <!-- Outcome -->
         <div class="outcome-section">
             <h2 style="color: white; margin-bottom: 30px;">🎯 Expected Outcome</h2>
@@ -664,17 +883,55 @@ flowchart LR
                 ✓ Sustains IC4G/VCF requirements without changing physical quantities
             </p>
         </div>
+
+        <div class="key-benefits">
+            <h3>Why This Meets the Target</h3>
+            <ul>
+                <li><strong>Most duplication is removed in IC4G</strong> (virtual dedupe repo), so COS receives much smaller backups.</li>
+                <li><strong>XFS fast-clone avoids large copies</strong> when creating "full" points.</li>
+                <li><strong>Move after N days</strong> shifts only aged restore points to COS, keeping local restores fast and COS usage predictable.</li>
+                <li><strong>With typical daily change</strong> (example ≈60 TB) and effective reduction (≈10:1), the amount moved per day is about ≈6 TB—aligning the 36-day total to ≤ 300 TB.</li>
+            </ul>
+        </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
     <script>
         mermaid.initialize({ 
             startOnLoad: true,
-            theme: 'default',
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#2d3748',
+                primaryBorderColor: '#4c51bf',
+                lineColor: '#4a5568',
+                secondaryColor: '#f7fafc',
+                tertiaryColor: '#edf2f7',
+                background: '#ffffff',
+                mainBkg: '#ffffff',
+                secondaryBkg: '#f8f9fa'
+            },
             flowchart: {
-                useMaxWidth: true,
-                htmlLabels: true,
-                curve: 'basis'
+                curve: 'basis',
+                padding: 15,
+                nodeSpacing: 50,
+                rankSpacing: 80
+            },
+            sequence: {
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35
+            },
+            gantt: {
+                titleTopMargin: 25,
+                barHeight: 20,
+                fontSize: 11,
+                sidePadding: 75,
+                gridLineStartPadding: 35,
+                fontSize: 11
             }
         });
     </script>
