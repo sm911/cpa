@@ -98,6 +98,8 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
             transition: all 0.4s ease;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .doc-card:hover {
@@ -161,6 +163,9 @@
 
         .doc-body {
             padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .doc-description {
@@ -171,6 +176,7 @@
 
         .key-topics {
             margin-bottom: 25px;
+            margin-top: auto;
         }
 
         .key-topics-title {
@@ -206,6 +212,7 @@
             padding: 25px 30px;
             background: #f8f9fa;
             border-top: 1px solid #e9ecef;
+            margin-top: auto;
         }
 
         .view-button {
@@ -377,35 +384,34 @@
 
         <!-- Document Cards -->
         <div class="documents-grid">
-            <!-- Cloud Backup Document -->
+            <!-- BOM Compliance Document -->
             <div class="doc-card">
-                <div class="doc-header backup">
-                    <div class="doc-icon">💾</div>
-                    <h2 class="doc-title">Cloud Backup Data-Reduction Pattern</h2>
-                    <p class="doc-subtitle">Deduplication Strategy for IBM Cloud Object Storage</p>
+                <div class="doc-header" style="background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);">
+                    <div class="doc-icon">📋</div>
+                    <h2 class="doc-title">BOM Compliance Guide</h2>
+                    <p class="doc-subtitle">Plain-Language Requirements & Delivery Status</p>
                 </div>
                 <div class="doc-body">
                     <p class="doc-description">
-                        A comprehensive implementation guide for achieving 36-day daily incremental 
-                        backups while maintaining storage consumption ≤300 TB in IBM Cloud Object 
-                        Storage. This document details the software selection, configuration 
-                        requirements, and operational procedures needed to deliver 8-12:1 
-                        effective reduction rates.
+                        A clear, non-technical overview of how the IC4G solution meets CPA 
+                        requirements. This document provides plain-language explanations of 
+                        technical terms, compliance status for each requirement, and details 
+                        about the necessary software components and configuration steps.
                     </p>
                     <div class="key-topics">
                         <div class="key-topics-title">Key Topics Covered:</div>
                         <div class="topic-list">
-                            <span class="topic-badge">DDVE Configuration</span>
-                            <span class="topic-badge">Veeam SOBR Setup</span>
-                            <span class="topic-badge">Deduplication Ratios</span>
-                            <span class="topic-badge">Object Lock Policies</span>
-                            <span class="topic-badge">Risk Mitigation</span>
+                            <span class="topic-badge">Compliance Status</span>
+                            <span class="topic-badge">Plain English Terms</span>
+                            <span class="topic-badge">Software Requirements</span>
+                            <span class="topic-badge">36-Day Retention</span>
+                            <span class="topic-badge">Configuration Steps</span>
                         </div>
                     </div>
                 </div>
                 <div class="doc-footer">
-                    <a href="cloud-backup-dedup-guide.html" class="view-button">
-                        📖 View Backup Strategy Documentation
+                    <a href="ic4g-bom-compliance.html" class="view-button" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);">
+                        ✅ View Compliance Documentation
                     </a>
                 </div>
             </div>
@@ -442,34 +448,35 @@
                 </div>
             </div>
 
-            <!-- BOM Compliance Document -->
+            <!-- Cloud Backup Document -->
             <div class="doc-card">
-                <div class="doc-header" style="background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%);">
-                    <div class="doc-icon">📋</div>
-                    <h2 class="doc-title">BOM Compliance Guide</h2>
-                    <p class="doc-subtitle">Plain-Language Requirements & Delivery Status</p>
+                <div class="doc-header backup">
+                    <div class="doc-icon">💾</div>
+                    <h2 class="doc-title">Cloud Backup Data-Reduction Pattern</h2>
+                    <p class="doc-subtitle">Deduplication Strategy for IBM Cloud Object Storage</p>
                 </div>
                 <div class="doc-body">
                     <p class="doc-description">
-                        A clear, non-technical overview of how the IC4G solution meets CPA 
-                        requirements. This document provides plain-language explanations of 
-                        technical terms, compliance status for each requirement, and details 
-                        about the necessary software components and configuration steps.
+                        A comprehensive implementation guide for achieving 36-day daily incremental 
+                        backups while maintaining storage consumption ≤300 TB in IBM Cloud Object 
+                        Storage. This document details the software selection, configuration 
+                        requirements, and operational procedures needed to deliver 8-12:1 
+                        effective reduction rates.
                     </p>
                     <div class="key-topics">
                         <div class="key-topics-title">Key Topics Covered:</div>
                         <div class="topic-list">
-                            <span class="topic-badge">Compliance Status</span>
-                            <span class="topic-badge">Plain English Terms</span>
-                            <span class="topic-badge">Software Requirements</span>
-                            <span class="topic-badge">36-Day Retention</span>
-                            <span class="topic-badge">Configuration Steps</span>
+                            <span class="topic-badge">DDVE Configuration</span>
+                            <span class="topic-badge">Veeam SOBR Setup</span>
+                            <span class="topic-badge">Deduplication Ratios</span>
+                            <span class="topic-badge">Object Lock Policies</span>
+                            <span class="topic-badge">Risk Mitigation</span>
                         </div>
                     </div>
                 </div>
                 <div class="doc-footer">
-                    <a href="ic4g-bom-compliance.html" class="view-button" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);">
-                        ✅ View Compliance Documentation
+                    <a href="cloud-backup-dedup-guide.html" class="view-button">
+                        📖 View Backup Strategy Documentation
                     </a>
                 </div>
             </div>
