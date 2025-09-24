@@ -180,7 +180,7 @@
             color: #4facfe;
         }
 
-        /* Math Breakdown */
+        /* Math Section */
         .math-section {
             background: white;
             border-radius: 20px;
@@ -304,8 +304,8 @@
             line-height: 1.5;
         }
 
-        /* Example Visual */
-        .example-section {
+        /* Flow Diagram Section - NEW */
+        .flow-diagram-section {
             background: white;
             border-radius: 20px;
             padding: 40px;
@@ -313,35 +313,132 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .vm-visual {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            margin: 25px 0;
-            justify-content: center;
+        .flow-container {
+            display: grid;
+            gap: 40px;
+            margin-top: 30px;
         }
 
-        .vm-box {
-            width: 60px;
-            height: 60px;
+        .flow-lane {
+            position: relative;
+        }
+
+        .flow-lane-title {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 0;
+        }
+
+        .flow-lane-content {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            padding: 25px;
+        }
+
+        .flow-box {
+            background: white;
+            padding: 20px;
             border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .flow-box:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .flow-box.hardware {
+            border-left: 4px solid #7aa2ff;
+        }
+
+        .flow-box.calc {
+            border-left: 4px solid #66d9ef;
+            background: #f0fbff;
+        }
+
+        .flow-box.policy {
+            border-left: 4px solid #f6c96b;
+            background: #fffdf5;
+        }
+
+        .flow-box.control {
+            border-left: 4px solid #60e0b7;
+            background: #f0fff9;
+        }
+
+        .flow-box.note {
+            border-left: 4px solid #888;
+            background: #fafafa;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            font-size: 1.5em;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .flow-highlight {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .flow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Walk-through Examples */
+        .walkthrough-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .example-card.valid {
+            border-color: #60e0b7;
+            background: #f0fff9;
+        }
+
+        .example-card.invalid {
+            border-color: #f5576c;
+            background: #fff5f6;
+        }
+
+        .example-label {
+            font-weight: 700;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            gap: 10px;
         }
 
-        .vm-box:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        .example-calc {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            color: #2d3748;
+            margin: 10px 0;
         }
 
         /* Conclusion */
@@ -371,6 +468,13 @@
             font-size: 0.7em;
         }
 
+        h3 {
+            color: #4a5568;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
         /* Utility Classes */
         .badge {
             display: inline-block;
@@ -388,6 +492,18 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 700;
+        }
+
+        .info-box {
+            background: #e8f5ff;
+            border-left: 4px solid #3182ce;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .info-box strong {
+            color: #2c5282;
         }
 
         /* Responsive */
@@ -408,14 +524,8 @@
                 font-size: 1.3em;
             }
 
-            .vm-visual {
-                gap: 5px;
-            }
-
-            .vm-box {
-                width: 40px;
-                height: 40px;
-                font-size: 0.7em;
+            .flow-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -449,70 +559,83 @@
 
         <!-- Plain English Explanation -->
         <div class="plain-english">
-            <h2>Summary</h2>
+            <h2>Understanding the 4:1 Ratio</h2>
             <div class="concept-grid">
                 <div class="concept-card">
                     <div class="concept-title">
-                        <span class="concept-icon">📏</span>
-                        What the Rule Means
+                        <span class="concept-icon">🔍</span>
+                        What Does 4:1 Mean?
                     </div>
-                    <p>For every <strong>1 physical CPU core</strong>, we're allowed to promise at most <strong>4 virtual CPUs (vCPUs)</strong> to VMs. That's the 4:1 vCPU ratio.</p>
+                    <p>For every <strong>1 physical CPU core</strong> in our servers, we can safely assign <strong>4 virtual CPUs</strong> to virtual machines. This is like having 1 chef who can reliably cook for 4 tables at once.</p>
                 </div>
                 <div class="concept-card">
                     <div class="concept-title">
                         <span class="concept-icon">🖥️</span>
-                        Our Hardware per Host
+                        Our Server Hardware
                     </div>
-                    <p><strong>Dual Intel Xeon Gold 6248</strong> → <strong>40 physical cores</strong> (20 per socket) at <strong>2.50 GHz</strong>.</p>
+                    <p>Each server has <strong>Dual Intel Xeon Gold 6248</strong> processors. This gives us <strong>40 physical cores</strong> per server (2 processors with 20 cores each).</p>
                 </div>
                 <div class="concept-card">
                     <div class="concept-title">
                         <span class="concept-icon">🧮</span>
-                        Per-Host Capacity
+                        Virtual Capacity Per Server
                     </div>
-                    <p>40 physical cores × 4 vCPU/core = <strong>160 vCPUs</strong> maximum allocated to VMs per host.</p>
+                    <p>With 40 physical cores and a 4:1 ratio: 40 × 4 = <strong>160 virtual CPUs</strong> can be assigned to virtual machines on each server.</p>
                 </div>
                 <div class="concept-card">
                     <div class="concept-title">
                         <span class="concept-icon">⚙️</span>
-                        Why This Works
+                        Why This Ratio Works
                     </div>
-                    <p>Physical cores do the real work; vCPUs are "slices" of those cores. A 4:1 limit keeps contention low so VMs get predictable CPU time.</p>
+                    <p>Most virtual machines don't use their CPU constantly. The 4:1 ratio ensures that when they do need processing power, it's available without excessive waiting.</p>
                 </div>
             </div>
         </div>
 
         <!-- Hardware Configuration -->
         <div class="hardware-section">
-            <h2>Hardware Configuration</h2>
+            <h2>Our Cluster Hardware</h2>
+            <p style="color: #4a5568; margin-bottom: 25px;">
+                We're using <strong>8 identical servers</strong> to build our cluster. Here's what's inside each one:
+            </p>
             <div class="hardware-specs">
                 <div class="spec-row">
-                    <span class="spec-label">CPU Model</span>
+                    <span class="spec-label">Server Count</span>
+                    <span class="spec-value">8 servers total</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Processor Model</span>
                     <span class="spec-value">Dual Intel Xeon Gold 6248</span>
                 </div>
                 <div class="spec-row">
-                    <span class="spec-label">Physical Cores per Host</span>
+                    <span class="spec-label">Physical Cores per Server</span>
                     <span class="spec-value">40 cores</span>
                 </div>
                 <div class="spec-row">
-                    <span class="spec-label">Sockets</span>
-                    <span class="spec-value">2 × 20 cores</span>
+                    <span class="spec-label">Processor Sockets</span>
+                    <span class="spec-value">2 processors × 20 cores each</span>
                 </div>
                 <div class="spec-row">
-                    <span class="spec-label">Base Frequency</span>
+                    <span class="spec-label">Processing Speed</span>
                     <span class="spec-value">2.50 GHz</span>
                 </div>
                 <div class="spec-row">
                     <span class="spec-label">Hyper-Threading</span>
-                    <span class="spec-value">80 logical threads</span>
+                    <span class="spec-value">80 logical threads per server</span>
                 </div>
                 <div class="spec-row">
-                    <span class="spec-label">vCPU Budget @ 4:1</span>
-                    <span class="spec-value">160 vCPUs</span>
+                    <span class="spec-label">Virtual CPU Budget (4:1 ratio)</span>
+                    <span class="spec-value">160 virtual CPUs per server</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">Total Cluster Capacity</span>
+                    <span class="spec-value">1,280 virtual CPUs (8 × 160)</span>
                 </div>
             </div>
             <p style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #f093fb;">
-                <strong>Note:</strong> Hyper-Threading provides 80 logical threads and improves scheduling smoothness, but we <strong>still</strong> cap vCPUs using <strong>physical cores</strong>, per the 4:1 rule.
+                <strong>What is Hyper-Threading?</strong> It's a technology that makes each physical core appear as 2 logical processors to the operating system. 
+                While this improves overall efficiency, we still base our calculations on <strong>physical cores only</strong> (40 per server) 
+                to ensure predictable performance. Think of it as a bonus feature rather than extra capacity.
             </p>
         </div>
 
@@ -574,162 +697,363 @@
 
         <!-- Why 4:1 Ratio -->
         <div class="plain-english">
-            <h2>Why 4:1 is the Right Ratio</h2>
+            <h2>Why 4:1 is the Industry Standard</h2>
             <div class="concept-grid">
                 <div class="concept-card">
                     <div class="concept-title">
                         <span class="concept-icon">🎯</span>
-                        Predictability
+                        Predictable Performance
                     </div>
-                    <p>At <strong>4:1</strong>, each core supports a small, controlled number of vCPU time slices. That keeps "waiting in line" (CPU Ready time) low, which users feel as snappy performance.</p>
+                    <p>With a <strong>4:1 ratio</strong>, virtual machines rarely wait for CPU time. It's like having 4 people share 1 bathroom—usually works fine because not everyone needs it at once. Going higher (like 8:1) would be like 8 people sharing 1 bathroom—lots of waiting!</p>
                 </div>
                 <div class="concept-card">
                     <div class="concept-title">
                         <span class="concept-icon">📈</span>
-                        Headroom for Peaks
+                        Room for Busy Periods
                     </div>
-                    <p>Real workloads spike. The 4:1 cap leaves room so short spikes don't starve other VMs.</p>
+                    <p>Applications have busy moments—end of month reports, backup windows, user logins. The 4:1 ratio leaves enough headroom so these peaks don't cause slowdowns for other systems.</p>
                 </div>
                 <div class="concept-card">
                     <div class="concept-title">
                         <span class="concept-icon">🏢</span>
-                        Standards-Aligned
+                        Proven in Production
                     </div>
-                    <p>4:1 is a common enterprise planning limit for mixed workloads (OS, apps, moderate DB), balancing utilization and performance.</p>
+                    <p>Thousands of data centers use 4:1 for general-purpose workloads. It balances efficiency (not wasting hardware) with reliability (applications run smoothly). Going lower wastes money; going higher risks poor performance.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Enforcement Controls -->
-        <div class="enforcement-section">
-            <h2>How We Enforce It (Operational Controls)</h2>
-            <div class="control-list">
-                <div class="control-item">
-                    <div class="control-number">1</div>
-                    <div class="control-title">Hard vCPU Budgeting</div>
-                    <div class="control-desc">
-                        • Per-host vCPU cap = <strong>160</strong><br>
-                        • Per-cluster cap = sum of host caps (minus HA/management reserve)
-                    </div>
-                </div>
-                <div class="control-item">
-                    <div class="control-number">2</div>
-                    <div class="control-title">Placement Rules & Admission Control</div>
-                    <div class="control-desc">
-                        • DRS/affinity rules and VM templates prevent over-allocating vCPUs above the cap<br>
-                        • Resource pools keep business-critical VMs protected
-                    </div>
-                </div>
-                <div class="control-item">
-                    <div class="control-number">3</div>
-                    <div class="control-title">Monitoring & Guardrails</div>
-                    <div class="control-desc">
-                        • Track <strong>CPU Ready %</strong> (target: typically <strong>&lt;5%</strong> steady-state)<br>
-                        • Watch <strong>co-stop</strong> and per-VM CPU contention; rebalance if thresholds are crossed
-                    </div>
-                </div>
-                <div class="control-item">
-                    <div class="control-number">4</div>
-                    <div class="control-title">HA Reserve</div>
-                    <div class="control-desc">
-                        Hold back ~<strong>15%</strong> cluster capacity so a host failure doesn't force us over 4:1 on the remaining hosts
-                    </div>
-                </div>
-                <div class="control-item">
-                    <div class="control-number">5</div>
-                    <div class="control-title">Right-Sizing Cadence</div>
-                    <div class="control-desc">
-                        Periodically trim oversized VMs (vCPU count vs. actual usage) to preserve the budget and performance
-                    </div>
-                </div>
+        <!-- Architecture Flow Diagram Section -->
+        <div class="flow-diagram-section">
+            <h2>Architecture Flow: From Hardware to Performance</h2>
+            <p style="color: #4a5568; margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                This diagram shows exactly how our cluster of <strong>8 servers</strong> implements the 4:1 vCPU ratio. 
+                Follow the flow from top to bottom to see how <strong>physical hardware</strong> becomes <strong>virtual capacity</strong> 
+                with built-in safeguards for reliable performance.
+            </p>
+            
+            <!-- Embedded SVG Flowchart -->
+            <div style="background: white; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                <svg viewBox="0 0 1600 1400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Define arrow markers -->
+                    <defs>
+                        <marker id="arrow" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto">
+                            <path d="M 0 0 L 12 6 L 0 12 L 3 6 Z" fill="#4a5568"/>
+                        </marker>
+                        
+                        <!-- Shadow filter -->
+                        <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Level 1: Hardware (Starting Point) -->
+                    <g id="hardware-section">
+                        <!-- Section background -->
+                        <rect x="500" y="30" width="600" height="350" fill="#e6f3ff" stroke="#2563eb" stroke-width="2" rx="8" opacity="0.3"/>
+                        <text x="800" y="55" text-anchor="middle" font-size="16" font-weight="600" fill="#1e40af">Starting Point — Cluster Hardware (8 Hosts)</text>
+                        
+                        <!-- Node A: Hardware -->
+                        <rect x="600" y="80" width="400" height="80" fill="#1e3a8a" stroke="#2563eb" stroke-width="3" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="800" y="105" text-anchor="middle" font-size="16" fill="white" font-weight="600">8× Dual Intel Xeon Gold 6248</text>
+                        <text class="node-text" x="800" y="125" text-anchor="middle" font-size="14" fill="white">Per host: 2 sockets × 20 cores each</text>
+                        <text class="node-text" x="800" y="145" text-anchor="middle" font-size="13" fill="#93c5fd">Cluster total: 8 hosts</text>
+                        
+                        <!-- Arrow A to B -->
+                        <path d="M 800 160 L 800 190" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                        
+                        <!-- Node B: Physical Cores Calculation -->
+                        <rect x="600" y="190" width="400" height="70" fill="#0891b2" stroke="#06b6d4" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="800" y="215" text-anchor="middle" font-size="14" fill="white">Physical cores per host =</text>
+                        <text class="node-text" x="800" y="235" text-anchor="middle" font-size="16" fill="white" font-weight="600">2 × 20 = 40 cores per host</text>
+                        <text class="node-text" x="800" y="252" text-anchor="middle" font-size="12" fill="#bfdbfe">Total: 8 × 40 = 320 cores cluster-wide</text>
+                        
+                        <!-- Arrow B to C -->
+                        <path d="M 800 260 L 800 290" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                        
+                        <!-- Node C: Hyper-Threading Note -->
+                        <rect x="600" y="290" width="400" height="50" fill="#6b7280" stroke="#9ca3af" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="800" y="310" text-anchor="middle" font-size="12" fill="white">💡 Hyper-Threading: 80 threads per host (info only)</text>
+                        <text class="node-text" x="800" y="328" text-anchor="middle" font-size="12" fill="white" font-weight="600">We count physical cores, not threads</text>
+                    </g>
+
+                    <!-- Arrow from Hardware to Policy -->
+                    <path d="M 800 380 L 800 420" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+
+                    <!-- Level 2: Per-Host Policy -->
+                    <g id="policy-section">
+                        <!-- Section background -->
+                        <rect x="500" y="420" width="900" height="230" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="8" opacity="0.3"/>
+                        <text x="800" y="445" text-anchor="middle" font-size="16" font-weight="600" fill="#d97706">Per-Host vCPU Policy & Budget (4:1)</text>
+                        
+                        <!-- Node D: Policy -->
+                        <rect x="600" y="470" width="400" height="60" fill="#ea580c" stroke="#f97316" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="800" y="495" text-anchor="middle" font-size="14" fill="white">Policy: Max</text>
+                        <text class="node-text" x="800" y="515" text-anchor="middle" font-size="16" fill="white" font-weight="600">4 vCPU per 1 physical core</text>
+                        
+                        <!-- Arrow D to E -->
+                        <path d="M 800 530 L 800 560" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                        
+                        <!-- Node E: vCPU Budget Calculation -->
+                        <rect x="600" y="560" width="400" height="60" fill="#0891b2" stroke="#06b6d4" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="800" y="585" text-anchor="middle" font-size="14" fill="white">Per-host vCPU budget =</text>
+                        <text class="node-text" x="800" y="605" text-anchor="middle" font-size="16" fill="white" font-weight="600">40 cores × 4 = 160 vCPU per host</text>
+                        
+                        <!-- Node F: VM Size Note (positioned to the right) -->
+                        <rect x="1050" y="560" width="320" height="60" fill="#6b7280" stroke="#9ca3af" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="1210" y="583" text-anchor="middle" font-size="12" fill="white">💡 VM sizes can vary (2/4/8/16 vCPU…)</text>
+                        <text class="node-text" x="1210" y="603" text-anchor="middle" font-size="12" fill="white" font-weight="600">Sum on host must stay ≤ 160 vCPU</text>
+                        
+                        <!-- Arrow E to F -->
+                        <path d="M 1000 590 L 1050 590" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                    </g>
+
+                    <!-- Arrow from Policy to Cluster -->
+                    <path d="M 800 640 L 800 680" stroke="#4a5568" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+
+                    <!-- Level 3: Cluster Capacity -->
+                    <g id="cluster-section">
+                        <!-- Section background -->
+                        <rect x="350" y="680" width="900" height="350" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="8" opacity="0.3"/>
+                        <text x="800" y="705" text-anchor="middle" font-size="16" font-weight="600" fill="#059669">Cluster Capacity (8 hosts from above)</text>
+                        
+                        <!-- Cluster nodes arranged horizontally with flow -->
+                        <!-- Node G: Hosts -->
+                        <rect x="380" y="730" width="140" height="50" fill="#1e3a8a" stroke="#2563eb" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="450" y="760" text-anchor="middle" font-size="15" fill="white" font-weight="600">Hosts = 8</text>
+                        
+                        <!-- Arrow G to H -->
+                        <path d="M 520 755 L 560 755" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                        
+                        <!-- Node H: Cluster Cores -->
+                        <rect x="560" y="730" width="200" height="50" fill="#0891b2" stroke="#06b6d4" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="660" y="750" text-anchor="middle" font-size="13" fill="white">Cluster physical cores =</text>
+                        <text class="node-text" x="660" y="768" text-anchor="middle" font-size="14" fill="white" font-weight="600">8 × 40 = 320 cores</text>
+                        
+                        <!-- Arrow H to I -->
+                        <path d="M 760 755 L 800 755" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                        
+                        <!-- Node I: Cluster vCPU Budget -->
+                        <rect x="800" y="730" width="220" height="50" fill="#0891b2" stroke="#06b6d4" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="910" y="750" text-anchor="middle" font-size="13" fill="white">Cluster vCPU budget @4:1 =</text>
+                        <text class="node-text" x="910" y="768" text-anchor="middle" font-size="14" fill="white" font-weight="600">320 × 4 = 1,280 vCPU</text>
+                        
+                        <!-- Arrow I to J -->
+                        <path d="M 1020 755 L 1060 755" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                        
+                        <!-- Node J: Reserve -->
+                        <rect x="1060" y="730" width="170" height="50" fill="#ea580c" stroke="#f97316" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="1145" y="750" text-anchor="middle" font-size="12" fill="white">Reserve ~15% for HA/mgmt</text>
+                        <text class="node-text" x="1145" y="768" text-anchor="middle" font-size="14" fill="white" font-weight="600">≈ 192 vCPU</text>
+                        
+                        <!-- Arrow J down to K -->
+                        <path d="M 1145 780 L 1145 810 L 900 810 L 900 840" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                        
+                        <!-- Node K: Allocatable (centered below) -->
+                        <rect x="700" y="840" width="400" height="60" fill="#059669" stroke="#10b981" stroke-width="3" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="900" y="865" text-anchor="middle" font-size="14" fill="white">Allocatable to workloads ≈</text>
+                        <text class="node-text" x="900" y="885" text-anchor="middle" font-size="16" fill="white" font-weight="600">1,280 − 192 = 1,088 vCPU</text>
+                        
+                        <!-- Note about backup software -->
+                        <rect x="700" y="920" width="400" height="50" fill="#fbbf24" stroke="#f59e0b" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="900" y="940" text-anchor="middle" font-size="12" fill="#78350f">📝 No additional physical hosts required!</text>
+                        <text class="node-text" x="900" y="958" text-anchor="middle" font-size="11" fill="#78350f">Backup software roles (proxies, repos) run as VMs here</text>
+                        
+                        <!-- Arrows from F and K to Controls -->
+                        <path d="M 1210 620 L 1210 1000 L 1100 1000 L 1100 1050" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none" stroke-dasharray="5,5"/>
+                        <path d="M 900 970 L 900 1020 L 500 1020 L 500 1050" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                    </g>
+
+                    <!-- Level 4: Architectural Controls -->
+                    <g id="controls-section">
+                        <!-- Section background -->
+                        <rect x="50" y="1050" width="1500" height="250" fill="#ede9fe" stroke="#7c3aed" stroke-width="2" rx="8" opacity="0.3"/>
+                        <text x="800" y="1075" text-anchor="middle" font-size="16" font-weight="600" fill="#6d28d9">Architectural Controls (What/Why/How)</text>
+                        
+                        <!-- Controls arranged horizontally -->
+                        <!-- Node L: DRS -->
+                        <rect x="100" y="1100" width="260" height="120" fill="#059669" stroke="#10b981" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="230" y="1125" text-anchor="middle" font-size="13" fill="white" font-weight="600">DRS placement & vMotion</text>
+                        <line x1="120" y1="1135" x2="340" y2="1135" stroke="white" stroke-width="1" opacity="0.5"/>
+                        <text class="node-text" x="230" y="1155" text-anchor="middle" font-size="11" fill="white">• Why: keep performance predictable</text>
+                        <text class="node-text" x="230" y="1175" text-anchor="middle" font-size="11" fill="white">• How: balance VMs so each</text>
+                        <text class="node-text" x="230" y="1195" text-anchor="middle" font-size="11" fill="white">  host stays ≤ 160 vCPU</text>
+                        
+                        <!-- Node M: HA -->
+                        <rect x="390" y="1100" width="260" height="120" fill="#059669" stroke="#10b981" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="520" y="1125" text-anchor="middle" font-size="13" fill="white" font-weight="600">HA admission control</text>
+                        <line x1="410" y1="1135" x2="630" y2="1135" stroke="white" stroke-width="1" opacity="0.5"/>
+                        <text class="node-text" x="520" y="1155" text-anchor="middle" font-size="11" fill="white">• Why: survive host failure without</text>
+                        <text class="node-text" x="520" y="1175" text-anchor="middle" font-size="11" fill="white">  oversubscription</text>
+                        <text class="node-text" x="520" y="1195" text-anchor="middle" font-size="11" fill="white">• How: block power-on if cluster</text>
+                        <text class="node-text" x="520" y="1210" text-anchor="middle" font-size="11" fill="white">  would exceed budget</text>
+                        
+                        <!-- Node N: Resource Pools -->
+                        <rect x="680" y="1100" width="260" height="120" fill="#059669" stroke="#10b981" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="810" y="1125" text-anchor="middle" font-size="13" fill="white" font-weight="600">Resource pools & quotas</text>
+                        <line x1="700" y1="1135" x2="920" y2="1135" stroke="white" stroke-width="1" opacity="0.5"/>
+                        <text class="node-text" x="810" y="1155" text-anchor="middle" font-size="11" fill="white">• Why: prevent accidental</text>
+                        <text class="node-text" x="810" y="1175" text-anchor="middle" font-size="11" fill="white">  over-allocation</text>
+                        <text class="node-text" x="810" y="1195" text-anchor="middle" font-size="11" fill="white">• How: caps by team/app;</text>
+                        <text class="node-text" x="810" y="1210" text-anchor="middle" font-size="11" fill="white">  enforce per-host headroom</text>
+                        
+                        <!-- Node O: Templates -->
+                        <rect x="970" y="1100" width="260" height="120" fill="#059669" stroke="#10b981" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="1100" y="1125" text-anchor="middle" font-size="13" fill="white" font-weight="600">Templates & sizing guardrails</text>
+                        <line x1="990" y1="1135" x2="1210" y2="1135" stroke="white" stroke-width="1" opacity="0.5"/>
+                        <text class="node-text" x="1100" y="1155" text-anchor="middle" font-size="11" fill="white">• Why: right-size VMs from day one</text>
+                        <text class="node-text" x="1100" y="1175" text-anchor="middle" font-size="11" fill="white">• How: default vCPU counts;</text>
+                        <text class="node-text" x="1100" y="1195" text-anchor="middle" font-size="11" fill="white">  approval for large VMs</text>
+                        
+                        <!-- Node P: Monitoring -->
+                        <rect x="1260" y="1100" width="260" height="120" fill="#059669" stroke="#10b981" stroke-width="2" rx="6" filter="url(#shadow)"/>
+                        <text class="node-text" x="1390" y="1125" text-anchor="middle" font-size="13" fill="white" font-weight="600">Monitoring & right-sizing</text>
+                        <line x1="1280" y1="1135" x2="1500" y2="1135" stroke="white" stroke-width="1" opacity="0.5"/>
+                        <text class="node-text" x="1390" y="1155" text-anchor="middle" font-size="11" fill="white">• Why: detect contention early</text>
+                        <text class="node-text" x="1390" y="1175" text-anchor="middle" font-size="11" fill="white">• How: track CPU Ready &lt;5%,</text>
+                        <text class="node-text" x="1390" y="1195" text-anchor="middle" font-size="11" fill="white">  co-stop; resize/rebalance</text>
+                    </g>
+
+                    <!-- Arrows from Controls to Outcome -->
+                    <path d="M 230 1220 L 230 1270 L 800 1270 L 800 1320" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                    <path d="M 520 1220 L 520 1250 L 800 1250 L 800 1320" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                    <path d="M 1100 1220 L 1100 1250 L 800 1250 L 800 1320" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+                    <path d="M 1390 1220 L 1390 1270 L 800 1270 L 800 1320" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+                    <!-- Level 5: Outcome -->
+                    <g id="outcome-section">
+                        <!-- Node Q: Outcome -->
+                        <rect x="550" y="1320" width="500" height="70" fill="#065f46" stroke="#10b981" stroke-width="3" rx="8" filter="url(#shadow)"/>
+                        <text class="node-text" x="800" y="1345" text-anchor="middle" font-size="16" fill="white" font-weight="600">✓ Low contention, predictable performance</text>
+                        <text class="node-text" x="800" y="1368" text-anchor="middle" font-size="14" fill="#bbf7d0">Backups, apps, and databases get CPU time when needed</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="info-box" style="margin-top: 40px;">
+                <strong>Key Terms in the Diagram:</strong>
+                <ul style="margin-top: 10px; margin-bottom: 0; padding-left: 20px;">
+                    <li><strong>DRS (Distributed Resource Scheduler):</strong> Software that automatically moves virtual machines between physical hosts to balance the load</li>
+                    <li><strong>HA (High Availability):</strong> Feature that automatically restarts virtual machines if a physical host fails</li>
+                    <li><strong>vMotion:</strong> Technology that moves running virtual machines from one host to another without downtime</li>
+                    <li><strong>CPU Ready:</strong> Metric showing how long a virtual machine waits for CPU time (lower is better)</li>
+                    <li><strong>Resource Pools:</strong> Groups that limit how many resources a set of virtual machines can use</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Visual Example -->
-        <div class="example-section">
-            <h2>Example (Easy to Visualize)</h2>
-            <p style="color: #4a5568; margin-bottom: 20px;">
-                A VM with <strong>4 vCPUs</strong> "uses up" <strong>4</strong> of the <strong>160</strong> vCPU budget on a host.
-            </p>
-            <p style="color: #4a5568; margin-bottom: 20px;">
-                On one host, you can safely place <strong>up to forty 4-vCPU VMs</strong> (40 × 4 = 160) and still meet 4:1.
-            </p>
+        <!-- Walk-through Examples -->
+        <div class="walkthrough-section">
+            <h2>Real-World Examples</h2>
             
-            <h3 style="color: #4a5568; margin: 25px 0 15px;">Visual: 40 VMs with 4 vCPUs each = 160 vCPUs total</h3>
-            <div class="vm-visual">
-                <!-- Generate 40 VM boxes -->
-                <div class="vm-box">VM1</div>
-                <div class="vm-box">VM2</div>
-                <div class="vm-box">VM3</div>
-                <div class="vm-box">VM4</div>
-                <div class="vm-box">VM5</div>
-                <div class="vm-box">VM6</div>
-                <div class="vm-box">VM7</div>
-                <div class="vm-box">VM8</div>
-                <div class="vm-box">VM9</div>
-                <div class="vm-box">VM10</div>
-                <div class="vm-box">VM11</div>
-                <div class="vm-box">VM12</div>
-                <div class="vm-box">VM13</div>
-                <div class="vm-box">VM14</div>
-                <div class="vm-box">VM15</div>
-                <div class="vm-box">VM16</div>
-                <div class="vm-box">VM17</div>
-                <div class="vm-box">VM18</div>
-                <div class="vm-box">VM19</div>
-                <div class="vm-box">VM20</div>
-                <div class="vm-box">VM21</div>
-                <div class="vm-box">VM22</div>
-                <div class="vm-box">VM23</div>
-                <div class="vm-box">VM24</div>
-                <div class="vm-box">VM25</div>
-                <div class="vm-box">VM26</div>
-                <div class="vm-box">VM27</div>
-                <div class="vm-box">VM28</div>
-                <div class="vm-box">VM29</div>
-                <div class="vm-box">VM30</div>
-                <div class="vm-box">VM31</div>
-                <div class="vm-box">VM32</div>
-                <div class="vm-box">VM33</div>
-                <div class="vm-box">VM34</div>
-                <div class="vm-box">VM35</div>
-                <div class="vm-box">VM36</div>
-                <div class="vm-box">VM37</div>
-                <div class="vm-box">VM38</div>
-                <div class="vm-box">VM39</div>
-                <div class="vm-box">VM40</div>
+            <h3>Examples for One Server (40 cores → 160 virtual CPUs budget)</h3>
+            
+            <div class="example-card valid">
+                <div class="example-label">
+                    <span style="color: #10b981;">✓</span> Good Configuration
+                </div>
+                <div class="example-calc">
+                    40 small VMs × 4 virtual CPUs each = 160 virtual CPUs
+                </div>
+                <p>This uses exactly our limit - acceptable but leaves no room for adding more VMs</p>
             </div>
-            <p style="text-align: center; color: #718096; margin-top: 15px;">
-                Each box represents a VM with 4 vCPUs • Total: 40 VMs × 4 vCPUs = 160 vCPUs
-            </p>
+
+            <div class="example-card valid">
+                <div class="example-label">
+                    <span style="color: #10b981;">✓</span> Good Configuration
+                </div>
+                <div class="example-calc">
+                    20 medium VMs × 8 virtual CPUs each = 160 virtual CPUs
+                </div>
+                <p>Different VM sizes, same total - this works perfectly fine</p>
+            </div>
+
+            <div class="example-card invalid">
+                <div class="example-label">
+                    <span style="color: #ef4444;">✗</span> Over Budget - Not Allowed
+                </div>
+                <div class="example-calc">
+                    10 large VMs × 16 virtual CPUs + 20 small VMs × 4 virtual CPUs = 240 virtual CPUs
+                </div>
+                <p>This exceeds our 160 virtual CPU limit per server - the system would prevent this configuration</p>
+            </div>
+
+            <h3>Cluster-Wide Example (All 8 Servers)</h3>
             
-            <p style="color: #4a5568; margin-top: 30px;">
-                At cluster scale, we track the total against the <strong>1,280 vCPU budget</strong> (then subtract the reserve).
-            </p>
+            <div class="example-card valid">
+                <div class="example-label">
+                    <span style="color: #10b981;">✓</span> How the Cluster Works
+                </div>
+                <p><strong>Total capacity:</strong> 1,088 virtual CPUs available for workloads</p>
+                <p><strong>Reserve capacity:</strong> 192 virtual CPUs kept in reserve</p>
+                <p><strong>If a server fails:</strong> The 7 remaining servers can handle the load from the failed server because we kept that reserve</p>
+                <p><strong>Why this matters:</strong> Even during a failure, we never exceed the 4:1 ratio, ensuring consistent performance</p>
+            </div>
+        </div>
+
+        <!-- Common Misunderstandings -->
+        <div class="plain-english">
+            <h2>Clearing Up Common Confusion</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-title">
+                        <span class="concept-icon">❌</span>
+                        Myth: "4:1 means max 4 virtual CPUs per VM"
+                    </div>
+                    <p><strong>Reality:</strong> The 4:1 ratio applies to the <strong>total</strong> virtual CPUs on a server, not individual VMs. You can have VMs with 16 or even 32 virtual CPUs, as long as the total of all VMs on that server stays within the 160 virtual CPU budget.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">
+                        <span class="concept-icon">❌</span>
+                        Myth: "Hyper-Threading doubles our capacity"
+                    </div>
+                    <p><strong>Reality:</strong> While Hyper-Threading creates 80 logical threads from our 40 physical cores, we only count the <strong>physical cores</strong> for capacity planning. Hyper-Threading improves efficiency but doesn't double our actual processing power.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">
+                        <span class="concept-icon">⚠️</span>
+                        Warning: "We can use all 1,280 virtual CPUs"
+                    </div>
+                    <p><strong>Reality:</strong> We deliberately keep ~15% (192 virtual CPUs) in reserve. This ensures that if a server fails, the remaining servers can absorb the extra load without violating our 4:1 ratio and causing performance problems.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Conclusion -->
         <div class="conclusion-section">
-            <h2 style="color: white; text-align: center; margin-bottom: 30px;">Conclusion</h2>
+            <h2 style="color: white; text-align: center; margin-bottom: 30px;">The Complete Picture</h2>
             <p style="font-size: 1.15em; line-height: 1.8;">
-                By selecting <strong style="color: white;">Dual Intel Xeon Gold 6248 (40 cores)</strong> per host and capping VM allocations at <strong style="color: white;">4 vCPUs per physical core</strong>, we <strong style="color: white;">meet the CPA/RFP 4:1 vCPU ratio</strong>.
+                Our architecture starts with <strong style="color: white;">8 servers</strong>, each containing <strong style="color: white;">Dual Intel Xeon Gold 6248 processors (40 cores)</strong>. 
+                By limiting virtual CPU allocation to <strong style="color: white;">4 virtual CPUs per physical core</strong>, we achieve the required <strong style="color: white;">4:1 ratio</strong>.
             </p>
             <p style="font-size: 1.15em; line-height: 1.8; margin-top: 20px;">
-                The arithmetic is straightforward, the operational guardrails keep us honest, and the result is predictable performance with enterprise headroom.
+                The flow diagram above shows exactly how this works: from hardware specifications through policy enforcement to the final outcome of reliable, predictable performance. 
+                Every virtual machine—whether running applications, databases, or backup software—gets the processing power it needs when it needs it.
             </p>
+            
+            <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 15px; margin: 30px 0;">
+                <p style="font-size: 1.1em; text-align: center; margin-bottom: 15px;">
+                    <strong>The Bottom Line:</strong>
+                </p>
+                <p style="font-size: 1.05em; text-align: center;">
+                    8 servers × 40 cores × 4:1 ratio = <strong>1,280 total virtual CPUs</strong><br>
+                    Minus 15% reserve = <strong>1,088 usable virtual CPUs</strong><br>
+                    <em>All workloads, including backup software, run on these same 8 servers</em>
+                </p>
+            </div>
             
             <div style="display: flex; justify-content: center; gap: 30px; margin-top: 40px; flex-wrap: wrap;">
                 <div style="text-align: center;">
-                    <div style="font-size: 2.5em; font-weight: 700;">✓</div>
-                    <div style="margin-top: 10px;">Meets Requirements</div>
+                    <div style="font-size: 2.5em; font-weight: 700;">✔</div>
+                    <div style="margin-top: 10px;">Meets 4:1 Requirement</div>
                 </div>
                 <div style="text-align: center;">
-                    <div style="font-size: 2.5em; font-weight: 700;">✓</div>
+                    <div style="font-size: 2.5em; font-weight: 700;">✔</div>
                     <div style="margin-top: 10px;">Predictable Performance</div>
                 </div>
                 <div style="text-align: center;">
-                    <div style="font-size: 2.5em; font-weight: 700;">✓</div>
-                    <div style="margin-top: 10px;">Enterprise Ready</div>
+                    <div style="font-size: 2.5em; font-weight: 700;">✔</div>
+                    <div style="margin-top: 10px;">Built-in Resilience</div>
                 </div>
             </div>
         </div>
