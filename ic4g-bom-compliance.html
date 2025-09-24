@@ -430,7 +430,7 @@
         <!-- Header -->
         <div class="header">
             <h1>IC4G BOM — Compliant Capability</h1>
-            <div class="subtitle"></div>
+            <div class="subtitle">Plain-Language Version</div>
         </div>
 
         <!-- Navigation -->
@@ -438,6 +438,98 @@
             <a href="cloud-backup-dedup-guide.html" class="back-button">
                 ← Back to Technical Implementation Guide
             </a>
+        </div>
+
+        <!-- Bill of Materials Section -->
+        <div class="compliance-section" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border: 2px solid #3a7bd5;">
+            <h2 class="section-title">📦 IC4G Bill of Materials</h2>
+            
+            <div style="background: #e0f2fe; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                <p style="color: #1e40af; font-weight: 600; margin-bottom: 10px;">
+                    <strong>Platform:</strong> IBM Cloud for Government (IC4G) — FedRAMP High Authorized
+                </p>
+                <p style="color: #1e40af;">
+                    <strong>Scope:</strong> Open Systems DRaaS environment per CPA PR 304-25-0526KW
+                </p>
+            </div>
+
+            <div style="display: grid; gap: 25px;">
+                <!-- Compute Section -->
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 5px solid #3b82f6;">
+                    <h3 style="color: #1e40af; margin-bottom: 15px; font-size: 1.3em;">💻 Compute (8 Hosts)</h3>
+                    <ul style="list-style: none; padding: 0; color: #475569; line-height: 1.8;">
+                        <li style="margin-bottom: 8px;">• <strong>CPU:</strong> Dual Intel® Xeon® <span class="highlight-blue">Gold 6248</span> per host (40 physical cores @ 2.50 GHz)</li>
+                        <li style="margin-bottom: 8px;">• <strong>vCPU policy:</strong> Sized to operate at <span class="highlight-green">≤ 4:1 vCPU-to-core</span> overcommit (meets the 1,250 vCPU target for 250 VMs)</li>
+                        <li style="margin-bottom: 8px;">• <strong>Memory:</strong> <span class="highlight-blue">768 GB RAM per host</span> (4 × 192 GB); <strong>6,144 GB total</strong> across the cluster (>5 TB requirement)</li>
+                        <li style="margin-bottom: 8px;">• <strong>Local NVMe:</strong> Intel Optane 750 GB per host (log/metadata, proxy/temp/cache uses)</li>
+                        <li>• <strong>High availability:</strong> N+1 host resilience within the eight-node cluster</li>
+                    </ul>
+                </div>
+
+                <!-- Virtualization Section -->
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 5px solid #8b5cf6;">
+                    <h3 style="color: #6b21a8; margin-bottom: 15px; font-size: 1.3em;">🔧 Virtualization / SDDC</h3>
+                    <ul style="list-style: none; padding: 0; color: #475569; line-height: 1.8;">
+                        <li style="margin-bottom: 8px;">• <strong>VMware Cloud Foundation (VCF)</strong> with <span class="highlight-purple">vSphere 7.0 Update 3i</span> (UEFI; per-host license)</li>
+                        <li style="margin-bottom: 8px;">• <strong>NSX-T Distributed Firewall</strong> available as part of VCF for micro-segmentation</li>
+                        <li>• <strong>vSAN-qualified node family</strong> (meets VCF hardware profile requirements)</li>
+                    </ul>
+                </div>
+
+                <!-- Backup & Recovery Section -->
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 5px solid #10b981;">
+                    <h3 style="color: #059669; margin-bottom: 15px; font-size: 1.3em;">💾 Backup & Recovery</h3>
+                    <ul style="list-style: none; padding: 0; color: #475569; line-height: 1.8;">
+                        <li style="margin-bottom: 8px;">• <strong>Veeam Backup & Replication</strong> license pack for <span class="highlight-green">200 VMs</span> (workload-based)</li>
+                        <li style="margin-bottom: 8px;">• <strong>Scale-out proxy architecture</strong> to meet daily incremental backup windows</li>
+                        <li>• <strong>Support for CBT</strong> (changed-block tracking) and synthetic operations</li>
+                    </ul>
+                </div>
+
+                <!-- Object Storage Section -->
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 5px solid #f59e0b;">
+                    <h3 style="color: #d97706; margin-bottom: 15px; font-size: 1.3em;">☁️ Object Storage</h3>
+                    <ul style="list-style: none; padding: 0; color: #475569; line-height: 1.8;">
+                        <li style="margin-bottom: 8px;">• <strong>IBM Cloud Object Storage (COS)</strong> – Standard tier, <span class="highlight-blue">300 TB</span> capacity allocated for the 36-day retention window</li>
+                        <li>• <strong>Object Lock (immutability)</strong> and <strong>bucket-policy retention</strong> supported</li>
+                    </ul>
+                </div>
+
+                <!-- Connectivity Section -->
+                <div style="background: white; padding: 25px; border-radius: 12px; border-left: 5px solid #ec4899;">
+                    <h3 style="color: #be185d; margin-bottom: 15px; font-size: 1.3em;">🌐 Connectivity</h3>
+                    <ul style="list-style: none; padding: 0; color: #475569; line-height: 1.8;">
+                        <li style="margin-bottom: 8px;">• <strong>Direct Link Dedicated – 1 Gbps × 2</strong> (primary + secondary) for private, low-latency replication and backup traffic</li>
+                        <li>• Compatible with Equinix/telecom hand-offs; encrypted overlay/IPSec supported as needed</li>
+                    </ul>
+                </div>
+
+                <!-- Requirement Fit Section -->
+                <div style="background: #f0fdf4; padding: 25px; border-radius: 12px; border: 2px solid #86efac;">
+                    <h3 style="color: #14532d; margin-bottom: 15px; font-size: 1.3em;">✅ Requirement Fit (Open Systems)</h3>
+                    <ul style="list-style: none; padding: 0; color: #166534; line-height: 1.8;">
+                        <li style="margin-bottom: 8px;">• <strong>CPU clock:</strong> ≥ 2.50 GHz (6248 meets)</li>
+                        <li style="margin-bottom: 8px;">• <strong>vCPU capacity:</strong> 8 hosts × 40 cores × 4:1 = <span class="highlight-green">1,280 vCPUs</span> (meets the ≤ 4:1 cap and the ~1,250 vCPU target for 250 VMs)</li>
+                        <li style="margin-bottom: 8px;">• <strong>RAM:</strong> <span class="highlight-green">6.0+ TB</span> available (exceeds 5 TB)</li>
+                        <li style="margin-bottom: 8px;">• <strong>Storage target:</strong> COS allocated at <span class="highlight-green">300 TB</span> for 36-day retention; see note below for reduction approach</li>
+                        <li>• <strong>FedRAMP/TexRAMP:</strong> IC4G is <strong>FedRAMP High</strong>; satisfies <strong>TexRAMP Level II</strong> control mapping</li>
+                    </ul>
+                </div>
+
+                <!-- Important Capacity Note -->
+                <div style="background: #fef3c7; padding: 25px; border-radius: 12px; border: 2px solid #fbbf24;">
+                    <h3 style="color: #78350f; margin-bottom: 15px; font-size: 1.3em;">⚠️ Important Capacity Note (COS 300 TB)</h3>
+                    <p style="color: #92400e; line-height: 1.8;">
+                        To <strong>reliably keep COS usage at or below 300 TB</strong> with <strong>36-day daily incrementals</strong>, 
+                        a <strong>virtual deduplication repository</strong> must be used in front of COS to achieve an 
+                        <strong>effective ~8–12:1</strong> reduction (comparable to CPA's on-prem double-pass dedupe).
+                    </p>
+                    <ul style="list-style: none; padding: 0; margin-top: 15px; color: #92400e;">
+                        <li style="margin-bottom: 8px;">• This <strong>deduplication software/appliance is licensed separately</strong> and <strong>is not included in IC4G pricing</strong></li>
+                        <li>• <strong>Typical placement:</strong> Veeam writes to the virtual dedupe repo (global/variable-length dedupe), and aged restore points are tiered to COS (immutability retained)</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <!-- Compliance Requirements Table -->
@@ -471,7 +563,7 @@
 
         <!-- Terms Explained Section -->
         <div class="terms-section">
-            <h2 class="section-title">📚 Terms Explained</h2>
+            <h2 class="section-title">📚 Terms Explained in Plain English</h2>
             <div class="terms-grid">
                 <div class="term-card">
                     <div class="term-name">Forever-Forward Incremental (FFI)</div>
