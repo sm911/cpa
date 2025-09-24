@@ -218,13 +218,14 @@
             overflow-x: auto;
             background: #f8f9fa;
             border-radius: 15px;
-            padding: 20px;
+            padding: 30px;
         }
 
         .mermaid {
             max-width: 100%;
             height: auto;
-            min-width: 1000px;
+            min-width: 1400px;
+            min-height: 600px;
         }
 
         .sequence-container {
@@ -614,44 +615,48 @@
         <h2>Component-Labeled Data Flow</h2>
         <div class="mermaid-container">
             <div class="mermaid" id="architecture-flow">
-flowchart LR
+flowchart TB
     %% Style
-    classDef lane fill:#f6f9ff,stroke:#4C6EF5,rx:12,ry:12
-    classDef comp fill:#ffffff,stroke:#4C6EF5,rx:8,ry:8
-    classDef cloud fill:#eefcf5,stroke:#2f9e44,rx:8,ry:8
-    classDef policy fill:#fff4e6,stroke:#f08c00,rx:8,ry:8
+    classDef lane fill:#f6f9ff,stroke:#4C6EF5,rx:12,ry:12,stroke-width:2px
+    classDef comp fill:#ffffff,stroke:#4C6EF5,rx:8,ry:8,stroke-width:2px
+    classDef cloud fill:#eefcf5,stroke:#2f9e44,rx:8,ry:8,stroke-width:2px
+    classDef policy fill:#fff4e6,stroke:#f08c00,rx:8,ry:8,stroke-width:2px
 
     %% Source
-    subgraph SRC["Customer Site — Production Systems"]
-        VM[Protected VMs / Apps]:::comp
+    subgraph SRC["🏢 Customer Site — Production Systems"]
+        VM[Protected VMs / Apps<br/>📱 Generate Data to Protect]:::comp
     end
 
     %% IC4G compute & repos
-    subgraph IC4G["IBM Cloud for Government — VCF Tenant (Backup Stack)"]
-        VBR[Veeam Server<br/>jobs & retention rules]:::comp
-        PRX[Veeam Proxies<br/>read changes]:::comp
-        subgraph REPO["Primary Landing (Performance Tier)"]
-            DEDUPE[Virtual Dedupe Repository<br/>DDVE / StoreOnce VSA / DXi]:::comp
-            XFS[XFS Repository<br/>fast-clone workspace]:::comp
+    subgraph IC4G["☁️ IBM Cloud for Government — VCF Tenant"]
+        subgraph MGMT["Management Layer"]
+            VBR[🎛️ Veeam Server<br/>Jobs & Retention Rules]:::comp
+            PRX[⚡ Veeam Proxies<br/>Read Changes & CBT]:::comp
         end
-        SOBR[SOBR Policy<br/>Perf = Dedupe + XFS<br/>Cap = COS • Action = Move after N days]:::policy
-        GW[Object-Storage Gateways]:::comp
+        
+        subgraph REPO["🏗️ Primary Landing - Performance Tier"]
+            DEDUPE[💾 Virtual Dedupe Repository<br/>DDVE / StoreOnce VSA / DXi<br/>🔄 8-12:1 Reduction]:::comp
+            XFS[⚡ XFS Repository<br/>Fast-Clone Synthetic Workspace<br/>🔗 Pointer-Based Fulls]:::comp
+        end
+        
+        SOBR[📋 SOBR Policy Engine<br/>Performance = Dedupe + XFS<br/>Capacity = COS<br/>🚀 Move after N days]:::policy
+        GW[🌐 Object-Storage Gateways<br/>S3 API Interface<br/>🔄 HA Configuration]:::comp
     end
 
     %% Capacity tier
-    subgraph COSLANE["IBM Cloud Object Storage — Capacity Tier"]
-        COS[Bucket with Object Lock immutable]:::cloud
+    subgraph COSLANE["🗄️ IBM Cloud Object Storage — Capacity Tier"]
+        COS[🔒 COS Bucket<br/>Object Lock Enabled<br/>📦 ≤300 TB Target<br/>🛡️ Immutable Storage]:::cloud
     end
 
-    %% Flow
-    VM -->|Day-1 FULL, then daily changes only| PRX
-    PRX -->|write backups| DEDUPE
-    PRX -.->|build space-saving fulls| XFS
-    VBR --> SOBR
-    DEDUPE -->|restore points older than N days| SOBR
-    SOBR -->|Move| GW
-    GW -->|S3| COS
-    XFS -->|metadata/points as needed| SOBR
+    %% Flow connections with enhanced labels
+    VM -->|📊 Day-1 FULL Backup<br/>Then Daily Changes Only<br/>📈 ~60TB/day logical| PRX
+    PRX -->|💿 Write Backups<br/>🗜️ Compression + CBT| DEDUPE
+    PRX -.->|⚡ Build Space-Saving Fulls<br/>🔗 Fast-Clone Operations| XFS
+    VBR -->|📜 Policy Management<br/>🔄 Orchestration| SOBR
+    DEDUPE -->|📅 Points Older than N Days<br/>🚚 Automated Migration| SOBR
+    SOBR -->|🚀 Move Operation<br/>📤 Deduped Objects| GW
+    GW -->|🌐 S3 API over Direct Link<br/>📊 ~6TB/day after reduction| COS
+    XFS -.->|📋 Metadata & Pointers<br/>🔗 Synthetic Operations| SOBR
             </div>
         </div>
 
@@ -912,9 +917,9 @@ gantt
             },
             flowchart: {
                 curve: 'basis',
-                padding: 15,
-                nodeSpacing: 50,
-                rankSpacing: 80
+                padding: 25,
+                nodeSpacing: 80,
+                rankSpacing: 120
             },
             sequence: {
                 actorMargin: 50,
